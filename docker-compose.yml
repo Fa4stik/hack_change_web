@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  web:
+    image: fa4stik/hack_change_web
+    env_file:
+      - ".env"
+    ports:
+      - "80:80"
