@@ -1,4 +1,4 @@
-import './01_app/styles/index.css'
+import '@/01_app/styles/index.css'
 import { tv } from "tailwind-variants";
 
 const main = tv({
