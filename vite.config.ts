@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
 import react from '@vitejs/plugin-react-swc'
 import * as path from 'node:path'
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -26,6 +27,7 @@ export default defineConfig({
 				},
 			},
 		}),
+		TanStackRouterVite(),
 	],
 	server: {
 		host: '0.0.0.0',

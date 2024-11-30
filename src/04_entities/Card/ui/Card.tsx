@@ -7,7 +7,7 @@ type CardProps = Node<
 		role: string
 		skills: string[]
 	},
-	'card'
+	'default'
 >
 
 export const Card = ({
