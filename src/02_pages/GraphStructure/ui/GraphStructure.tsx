@@ -132,7 +132,7 @@ export const GraphStructure = () => {
 				onEdgesChange={onEdgesChange}
 				onConnect={onConnect}
 			>
-				{/*<DevTools />*/}
+				{import.meta.env.DEV && <DevTools />}
 				<Controls />
 				<MiniMap />
 			</ReactFlow>
