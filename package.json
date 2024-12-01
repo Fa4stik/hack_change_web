@@ -9,6 +9,7 @@
     "docker-build": "docker build -f Dockerfile_dev -t fa4stik/hack_change_web .",
     "docker-push": "docker push fa4stik/hack_change_web",
     "docker-deploy": "pnpm run build && pnpm docker-build && pnpm docker-push",
+    "srv-deploy": "pnpm docker-deploy && scripts/deploy.sh",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -19,9 +20,12 @@
     "@mui/material": "^6.1.9",
     "@mui/styled-engine-sc": "^6.1.9",
     "@mui/x-data-grid": "^7.23.0",
+    "@tanstack/react-query": "4",
     "@tanstack/react-router": "^1.85.0",
+    "@types/axios": "^0.14.4",
     "@types/node": "^22.9.1",
     "@xyflow/react": "^12.3.5",
+    "axios": "^1.7.8",
     "prettier": "^3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -29,6 +33,7 @@
     "tailwind-variants": "^0.3.0",
     "ts-node": "^10.9.2",
     "vite-plugin-svgr": "^4.3.0",
+    "zod": "^3.23.8",
     "zustand": "^5.0.1"
   },
   "devDependencies": {

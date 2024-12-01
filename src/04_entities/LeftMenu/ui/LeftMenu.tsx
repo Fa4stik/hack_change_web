@@ -1,5 +1,6 @@
 import { tv } from 'tailwind-variants'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useUiStore } from '@/04_entities/Store'
 
 const linkStyles = tv({
 	base: 'w-full py-4 hover:bg-footer rounded-lg text-center cursor-pointer text-sm whitespace-nowrap',
@@ -30,6 +31,12 @@ type LeftMenuProps = {
 
 export const LeftMenu = ({ items }: Readonly<LeftMenuProps>) => {
 	const [activeItem, setActiveItem] = useState(items[0].name)
+
+	const setBreadcrumb = useUiStore(state => state.setBreadcrumb)
+
+	useEffect(() => {
+		setBreadcrumb(activeItem)
+	}, [activeItem])
 
 	return (
 		<nav className='max-w-56 flex-grow'>

@@ -1,8 +1,9 @@
 import { routeTree } from '../routeTree.gen.ts'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import '@/01_app/styles/index.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-const router = createRouter({ routeTree, basepath: '/hack_change_web' })
+const router = createRouter({ routeTree })
 
 declare module '@tanstack/react-router' {
 	interface Register {
@@ -11,8 +12,14 @@ declare module '@tanstack/react-router' {
 	}
 }
 
+const queryClient = new QueryClient()
+
 function App() {
-	return <RouterProvider router={router} />
+	return (
+		<QueryClientProvider client={queryClient}>
+			<RouterProvider router={router} />
+		</QueryClientProvider>
+	)
 }
 
 export default App

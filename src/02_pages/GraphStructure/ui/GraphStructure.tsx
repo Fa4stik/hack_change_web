@@ -13,12 +13,13 @@ import {
 	useNodesState,
 } from '@xyflow/react'
 import { useCallback, useEffect } from 'react'
-import { Card } from '@/04_entities/Card'
 import { mockEmployees } from '@/05_shared/mock/structure.ts'
 import DevTools from '@/04_entities/ReactFlowDevtools/ui/Devtools.tsx'
+import { useEmployee } from '@/04_entities/Api'
+import { GraphCard } from '@/04_entities/Graph/ui/GraphCard.tsx'
 
 const main = tv({
-	base: 'w-screen h-screen',
+	base: 'w-screen h-[50vh]',
 })
 
 export const initialNodes: Node[] = [
@@ -70,11 +71,15 @@ export const initialEdges: Edge[] = [
 	},
 ]
 
-const nodeTypes = { cardEmployee: Card }
+const nodeTypes = { cardEmployee: GraphCard }
 
 export const GraphStructure = () => {
 	const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
 	const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
+
+	const {
+		getEmployee: { data, isSuccess },
+	} = useEmployee()
 
 	const onConnect = useCallback(
 		(params: Connection) => setEdges(eds => addEdge(params, eds)),
@@ -82,12 +87,16 @@ export const GraphStructure = () => {
 	)
 
 	useEffect(() => {
+		if (!data || !isSuccess) {
+			return
+		}
+
 		const levelMap: { [key: number]: number } = {}
 		const levelCounts: { [key: number]: number } = {}
 
-		const nodes: Node[] = mockEmployees.map(employee => {
-			const level = employee.managerId
-				? (levelMap[employee.managerId] || 0) + 1
+		const nodes: Node[] = data.map(employee => {
+			const level = employee.manager_id
+				? (levelMap[employee.manager_id] || 0) + 1
 				: 0
 			levelMap[employee.id] = level
 			levelCounts[level] = (levelCounts[level] || 0) + 1
@@ -95,12 +104,8 @@ export const GraphStructure = () => {
 			return {
 				id: `node-${employee.id}`,
 				type: 'cardEmployee',
-				data: {
-					name: employee.name,
-					role: employee.role,
-					skills: employee.skills,
-				},
-				position: { x: (levelCounts[level] - 1) * 300, y: level * 200 },
+				data: employee,
+				position: { x: (levelCounts[level] - 1) * 300, y: level * 300 },
 			}
 		})
 
@@ -120,7 +125,7 @@ export const GraphStructure = () => {
 
 		setEdges(edges)
 		setNodes(nodes)
-	}, [])
+	}, [data, isSuccess])
 
 	return (
 		<main className={main()}>

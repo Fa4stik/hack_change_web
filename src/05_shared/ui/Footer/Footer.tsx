@@ -1,7 +1,7 @@
 import { tv } from 'tailwind-variants'
 
 const footer = tv({
-	base: 'w-full flex justify-between px-6 py-4 bg-footer rounded-xl mt-auto',
+	base: 'w-full flex justify-between px-6 py-4 bg-footer rounded-xl mt-auto mb-6',
 })
 
 type FooterProps = {}

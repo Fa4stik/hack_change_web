@@ -8,6 +8,7 @@ import {
 	ThemeProvider,
 } from '@mui/material'
 import { useState } from 'react'
+import { getFilters } from '@/04_entities/Api/lib/fetchEmployee.ts'
 
 const theme = createTheme({
 	typography: {},
@@ -55,8 +56,6 @@ function getStyles(name: string, personName: string[], theme: Theme) {
 	}
 }
 
-const names = ['Команды', 'Сотрудники', 'Мое подразделение']
-
 type MultiSelectProps = {}
 
 export const MultiSelect = ({}: Readonly<MultiSelectProps>) => {
@@ -77,13 +76,21 @@ export const MultiSelect = ({}: Readonly<MultiSelectProps>) => {
 			<Select
 				multiple
 				value={personName}
+				displayEmpty
 				onChange={handleChange}
 				input={<OutlinedInput label='Фильтры' />}
 				MenuProps={MenuProps}
+				renderValue={selected => {
+					if (selected.length === 0) {
+						return <em>Выберите фильтры...</em>
+					}
+
+					return selected.join(', ')
+				}}
 				fullWidth
 				size={'small'}
 			>
-				{names.map(name => (
+				{getFilters().map(({ name }) => (
 					<MenuItem
 						key={name}
 						value={name}

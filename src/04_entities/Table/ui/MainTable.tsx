@@ -1,14 +1,21 @@
 import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid'
 import { EmptyUser } from '@/05_shared/assets'
+import { useUiStore } from '@/04_entities/Store'
 
 type MainTableProps = {}
 
 export const MainTable = ({}: Readonly<MainTableProps>) => {
+	const setIsOpenModal = useUiStore(state => state.setIsOpenModal)
+
 	return (
 		<div className='w-full h-full'>
 			<DataGrid
 				rows={rows}
 				columns={columns}
+				disableRowSelectionOnClick
+				onRowDoubleClick={() => {
+					setIsOpenModal(true)
+				}}
 				sx={{
 					borderRadius: '2em',
 				}}
